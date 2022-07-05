@@ -44,7 +44,7 @@ class Post(models.Model):
         (3, 'Audio'),
         (4, 'Document'),
     ])
-    caption = models.TextField(max_length=100)
+    caption = models.TextField(max_length=1024)
 
     def send_to(self, user:TelegramUser):
         
