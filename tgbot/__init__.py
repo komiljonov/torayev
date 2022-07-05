@@ -97,7 +97,7 @@ class Bot(Updater):
             context.user_data['user'] = User.objects.get(chat_id=user.id)
             if not db.name:
                 user.send_message(
-                    'Iltimos ismningiz va familyangizni yuboring.', reply_markup=ReplyKeyboardRemove())
+                    'Iltimos ismingiz va familyangizni yuboring.', reply_markup=ReplyKeyboardRemove())
                 return NAME
             elif not db.number:
                 user.send_message('Iltimos raqamingizni yuboring.', reply_markup=ReplyKeyboardMarkup(
@@ -149,6 +149,10 @@ class Bot(Updater):
         context.user_data['user'].is_registered = True
         context.user_data['user'].reg_date = datetime.datetime.now()
         context.user_data['user'].save()
+        user.send_message(
+            "Tabriklaymiz siz botimizdan muvafaqqiyatli ro'yxatdan o'tdingiz.",
+            reply_markup=ReplyKeyboardRemove()
+        )
         post:Post = Post.objects.first()
         if post:
             post.send_to(user)
