@@ -244,7 +244,16 @@ class Bot(Updater):
 
     def post_media(self, update: Update, context: CallbackContext):
         user, db = User.get(update)
-        context.user_data['post']['media'] = update.message.photo[-1] or update.message.document or update.message.video or update.message.audio
+        if update.message.photo:
+            context.user_data['post']['media'] = update.message.photo[-1]
+        elif update.message.document:
+            context.user_data['post']['media'] = update.message.document
+        elif update.message.video:
+            context.user_data['post']['media'] = update.message.video
+        elif update.message.audio:
+            context.user_data['post']['media'] = update.message.audio
+
+
         context.user_data['post']['media_type'] = 1 if update.message.photo else (
             2 if update.message.video else (
                 3 if update.message.audio else 4
