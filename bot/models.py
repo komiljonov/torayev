@@ -1,6 +1,6 @@
 import os
 from django.db import models
-from telegram import Update
+from telegram import ReplyKeyboardRemove, Update
 from telegram import User as TelegramUser
 # Create your models here.
 
@@ -49,14 +49,14 @@ class Post(models.Model):
     def send_to(self, user:TelegramUser):
         
         if self.media_type == 0:
-            user.send_message(self.caption, parse_mode="HTML")
+            user.send_message(self.caption, parse_mode="HTML", reply_markup=ReplyKeyboardRemove())
         elif self.media_type == 1:
-            user.send_photo(open(self.media.path, 'rb'), caption=self.caption, parse_mode="HTML")
+            user.send_photo(open(self.media.path, 'rb'), caption=self.caption, parse_mode="HTML", reply_markup=ReplyKeyboardRemove())
         elif self.media_type == 2:
-            user.send_video(open(self.media.path, 'rb'), caption=self.caption, parse_mode="HTML")
+            user.send_video(open(self.media.path, 'rb'), caption=self.caption, parse_mode="HTML", reply_markup=ReplyKeyboardRemove())
         elif self.media_type == 3:
-            user.send_audio(open(self.media.path, 'rb'), caption=self.caption, parse_mode="HTML")
+            user.send_audio(open(self.media.path, 'rb'), caption=self.caption, parse_mode="HTML", reply_markup=ReplyKeyboardRemove())
         elif self.media_type == 4:
-            user.send_document(open(self.media.path, 'rb'), caption=self.caption, parse_mode="HTML")
+            user.send_document(open(self.media.path, 'rb'), caption=self.caption, parse_mode="HTML", reply_markup=ReplyKeyboardRemove())
 
     
