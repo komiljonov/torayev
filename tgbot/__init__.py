@@ -91,9 +91,6 @@ class Bot(Updater):
             context.user_data['user'] = db = User.objects.create(
                 chat_id=user.id)
             user.send_message(
-                """Ассалому алайкум! Xush kelibsiz!"""
-            )
-            user.send_message(
                 'Iltimos ismingiz va familyangizni yuboring.', reply_markup=ReplyKeyboardRemove())
             return NAME
         elif not db.is_registered:
@@ -103,7 +100,6 @@ class Bot(Updater):
                     'Iltimos ismningiz va familyangizni yuboring.', reply_markup=ReplyKeyboardRemove())
                 return NAME
             elif not db.number:
-                print('dfgdfgdfgdfg')
                 user.send_message('Iltimos raqamingizni yuboring.', reply_markup=ReplyKeyboardMarkup(
                     [
                         [
@@ -197,13 +193,19 @@ class Bot(Updater):
             worksheet.write(
                 i+1, 7, user.reg_date.strftime("%Y-%m-%d %H:%M:%S") if user.reg_date else "")
         data.close()
+
+
+
+
+        
+
         return open("stats.xlsx", 'rb')
 
     def post(self, update: Update, context: CallbackContext):
         user, db = User.get(update)
         if db.is_admin:
             context.user_data['post'] = {}
-            user.send_message("Iltimos postni kimlarga yuborilishini tanlang!", reply_markup=ReplyKeyboardMarkup(
+            context.user_data['select_users_message'] = user.send_message("Iltimos postni kimlarga yuborilishini tanlang!", reply_markup=ReplyKeyboardMarkup(
                 [
                     [
                         "Hammaga"
@@ -219,6 +221,11 @@ class Bot(Updater):
 
     def post_receivers(self, update: Update, context: CallbackContext):
         user, db = User.get(update)
+        try:
+            context.user_data['select_users_message'].delete()
+        except Exception as e:
+            print(e)
+            pass
         context.user_data['post']['receivers'] = 0 if update.message.text == "Hammaga" else (
             1 if update.message.text == "Start bosgan lekin ro'yxatdan o'tmagan" else 2
         )
@@ -236,7 +243,7 @@ class Bot(Updater):
 
     def post_media(self, update: Update, context: CallbackContext):
         user, db = User.get(update)
-        context.user_data['post']['media'] = update.message.photo or update.message.document or update.message.video or update.message.audio
+        context.user_data['post']['media'] = update.message.photo[-1] or update.message.document or update.message.video or update.message.audio
         context.user_data['post']['media_type'] = 1 if update.message.photo else (
             2 if update.message.video else (
                 3 if update.message.audio else 4
