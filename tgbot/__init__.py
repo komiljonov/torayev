@@ -149,16 +149,9 @@ class Bot(Updater):
         context.user_data['user'].is_registered = True
         context.user_data['user'].reg_date = datetime.datetime.now()
         context.user_data['user'].save()
-        post = Post.objects.first()
+        post:Post = Post.objects.first()
         if post:
             post.send_to(user)
-        user.send_message("""Ассалому алайкум!
-
-" HR менежернинг асосий вазифалари" вебинарига муваффақиятли рўйхатдан ўтганингиз билан табриклаймиз.⚡️
-
-⏰ Вебинар санаси:  4-июль, соат 19:00да
-
-✅ Барча янгиликлардан хабардор бўлиш учун ушбу ботни «pin» қилиб қўйинг""", reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
 
     def data(self, update: Update, context: CallbackContext):
