@@ -18,7 +18,7 @@ class User(models.Model):
     start_time = models.DateTimeField(auto_now_add=True)
     reg_date = models.DateTimeField(null=True)
 
-    __str__ = lambda self: f"{self.name} | {self.number}"
+    __str__ = lambda self: f"{self.name} | {self.number} | {self.chat_id}"
 
 
 
