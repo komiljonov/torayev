@@ -262,7 +262,7 @@ class Bot(Updater):
 
         if update.message.caption:
             context.user_data['post']['text'] = update.message.caption
-            context.user_data['post']['entity'] = update.message.entities
+            context.user_data['post']['entity'] = update.message.caption_entities
             self.check_post(update, context)
             return CHECK_POST
 
