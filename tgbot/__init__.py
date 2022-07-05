@@ -164,6 +164,7 @@ class Bot(Updater):
     def make_stats(self):
         data = xlsxwriter.Workbook("stats.xlsx")
         worksheet = data.add_worksheet()
+        worksheet.write(0, 0, "id")
         worksheet.write(0, 1, "chat_id")
         worksheet.write(0, 2, "name")
         worksheet.write(0, 3, "number")
@@ -176,6 +177,7 @@ class Bot(Updater):
         for i in range(len(users)):
             user = users[i]
             print(user)
+            worksheet.write(i+1, 0, i+1)
             worksheet.write(i+1, 1, user.chat_id)
             worksheet.write(i+1, 2, user.name)
             worksheet.write(i+1, 3, user.number)
