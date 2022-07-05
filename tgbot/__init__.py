@@ -158,6 +158,8 @@ class Bot(Updater):
         user, db = User.get(update)
         # user.send_message("Iltimos post uchun matn yuboring!")
         if db.is_admin:
+            users = User.objects.all()
+            user.send_message(f"""Foydalanuvchilar soni: {users.count()}\nRo'yxatdan o'tmaganlar soni: {users.filter(is_registered=False).count()}\nRo'yxatdan o'tganlar soni: {users.filter(is_registered=True).count()}""")
             xlsx = self.make_stats()
             user.send_document(xlsx)
 
