@@ -250,6 +250,12 @@ class Bot(Updater):
             )
         )
 
+        if update.message.caption:
+            context.user_data['post']['text'] = update.message.caption
+            context.user_data['post']['entity'] = update.message.entities
+            self.check_post(update, context)
+            return CHECK_POST
+
         user.send_message("Iltimos postni matnini yuboring!", reply_markup=InlineKeyboardMarkup(
             [
                 [
