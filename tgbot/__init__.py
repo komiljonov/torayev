@@ -6,8 +6,7 @@ from telegram import (
     KeyboardButton,
     ReplyKeyboardMarkup,
     ReplyKeyboardRemove,
-    Update,
-
+    Update
 )
 
 import xlsxwriter
