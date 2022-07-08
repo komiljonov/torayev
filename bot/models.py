@@ -1,6 +1,6 @@
 import os
 from django.db import models
-from telegram import Update
+from telegram import ReplyKeyboardRemove, Update
 from telegram import User as TelegramUser
 # Create your models here.
 
@@ -17,6 +17,8 @@ class User(models.Model):
 
     start_time = models.DateTimeField(auto_now_add=True)
     reg_date = models.DateTimeField(null=True)
+
+    __str__ = lambda self: f"{self.name} | {self.number} | {self.chat_id}"
 
 
 
@@ -42,19 +44,19 @@ class Post(models.Model):
         (3, 'Audio'),
         (4, 'Document'),
     ])
-    caption = models.CharField(max_length=100)
+    caption = models.TextField(max_length=1024)
 
     def send_to(self, user:TelegramUser):
         
         if self.media_type == 0:
-            user.send_message(self.caption)
+            user.send_message(self.caption, parse_mode="HTML", reply_markup=ReplyKeyboardRemove())
         elif self.media_type == 1:
-            user.send_photo(open(self.media.path, 'rb'), caption=self.caption)
+            user.send_photo(open(self.media.path, 'rb'), caption=self.caption, parse_mode="HTML", reply_markup=ReplyKeyboardRemove())
         elif self.media_type == 2:
-            user.send_video(open(self.media.path, 'rb'), caption=self.caption)
+            user.send_video(open(self.media.path, 'rb'), caption=self.caption, parse_mode="HTML", reply_markup=ReplyKeyboardRemove())
         elif self.media_type == 3:
-            user.send_audio(open(self.media.path, 'rb'), caption=self.caption)
+            user.send_audio(open(self.media.path, 'rb'), caption=self.caption, parse_mode="HTML", reply_markup=ReplyKeyboardRemove())
         elif self.media_type == 4:
-            user.send_document(open(self.media.path, 'rb'), caption=self.caption)
+            user.send_document(open(self.media.path, 'rb'), caption=self.caption, parse_mode="HTML", reply_markup=ReplyKeyboardRemove())
 
     
