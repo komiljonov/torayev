@@ -25,7 +25,15 @@ SECRET_KEY = 'django-insecure-0j^=9e8mtd75y#p)(r!d0q7n(joqal71n+0okvxw(3n*mho#n_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['http://127.0.0.1:5500', '127.0.0.1:5500', '127.0.0.1']
+ALLOWED_HOSTS = ["*"]
+CORS_ORIGIN_ALLOW_ALL = DEBUG
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:5500",
+    'http://127.0.0.1',
+    'http://localhost'
+]
+
 
 
 # Application definition
@@ -37,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bot'
+    'bot',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -48,6 +57,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = 'turayev.urls'

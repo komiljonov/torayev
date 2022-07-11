@@ -1,22 +1,6 @@
-"""turayev URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
-from django.urls import path
-
-
+import json
+from flask import Flask, request
+from flask_cors import CORS
 from amocrm.v2.tokens import default_token_manager as manager
 from amocrm.v2 import Lead, Status, Pipeline, Contact
 
@@ -56,31 +40,32 @@ manager(
     "https://example.com"
 )
 
+app = Flask(__name__)
+
+CORS(app)
+
+@app.route('/register', methods=["GET", "POST"])
+def register():
+    data = json.loads(request.data)
+    name, number = data['name'], data['number']
+    pipeline: Pipeline = Pipeline.objects.get(object_id=5559010)
+    status: Status = Status.get_for(pipeline).get(object_id=49093348)
+    new_lead: Lead = Lead(
+        data={
+            'name':f"Telegram HR Bot {number} {name} "
+        }
+    )
+    new_lead.status = status
+    new_lead.save()
+    contact: Contact = Contact()
+    contact._data = make_data(name, number)
+    contact.save()
+    new_lead.contacts.append(
+        contact
+    )
+    new_lead.save()
+    return "salom"
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def register( request):
-        print(request.data)
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('register/', register)
-]
+app.run()
