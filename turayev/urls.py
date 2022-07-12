@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 
 from amocrm.v2.tokens import default_token_manager as manager
@@ -82,5 +82,5 @@ def register( request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('register/', register)
+    path('', include('bot.urls'))
 ]

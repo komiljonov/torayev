@@ -26,12 +26,15 @@ SECRET_KEY = 'django-insecure-0j^=9e8mtd75y#p)(r!d0q7n(joqal71n+0okvxw(3n*mho#n_
 DEBUG = True
 
 # ALLOWED_HOSTS = ['http://127.0.0.1:5500', '127.0.0.1:5500', '127.0.0.1']
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "http://localhost:3001",
+    '192.168.0.113'
+]
 CORS_ORIGIN_ALLOW_ALL = DEBUG
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:5500",
+    "http://127.0.0.1:3001",
     'http://127.0.0.1',
-    'http://localhost'
+    'http://localhost:3001'
 ]
 
 
@@ -66,7 +69,7 @@ ROOT_URLCONF = 'turayev.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

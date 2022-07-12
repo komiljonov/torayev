@@ -59,4 +59,15 @@ class Post(models.Model):
         elif self.media_type == 4:
             user.send_document(open(self.media.path, 'rb'), caption=self.caption, parse_mode="HTML", reply_markup=ReplyKeyboardRemove())
 
-    
+
+
+class Video(models.Model):
+    name = models.CharField(max_length=100)
+    url = models.URLField()
+
+    @property
+    def json(self):
+        return {
+            'name': self.name,
+            'url': self.url
+        }
