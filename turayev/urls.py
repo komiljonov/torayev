@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 from amocrm.v2.tokens import default_token_manager as manager
 from amocrm.v2 import Lead, Status, Pipeline, Contact
@@ -83,4 +84,4 @@ def register( request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('bot.urls'))
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

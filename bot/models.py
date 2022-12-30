@@ -71,3 +71,13 @@ class Video(models.Model):
             'name': self.name,
             'url': self.url
         }
+
+
+
+class DbLead(models.Model):
+    name = models.CharField(max_length=100)
+    number = models.CharField(max_length=100)
+    work_place = models.CharField(max_length=100)
+
+    def str(self):
+        return f"{self.name} | {self.number} | {self.work_place}"

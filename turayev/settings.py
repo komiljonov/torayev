@@ -25,17 +25,29 @@ SECRET_KEY = 'django-insecure-0j^=9e8mtd75y#p)(r!d0q7n(joqal71n+0okvxw(3n*mho#n_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 # ALLOWED_HOSTS = ['http://127.0.0.1:5500', '127.0.0.1:5500', '127.0.0.1']
 ALLOWED_HOSTS = [
     "http://localhost:3001",
     '192.168.0.113',
-    '127.0.0.1'
+    '127.0.0.1',
+    '206.189.10.175',
+    'kozimhonturaev.uz',
+    'kozimhon.uz',
+    'kozimxon.uz',
+    'kozimxonturaev.uz'
 ]
 CORS_ORIGIN_ALLOW_ALL = DEBUG
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3001",
     'http://127.0.0.1',
-    'http://localhost:3001'
+    'http://localhost:3001',
+    'http://192.168.0.113',
+    'https://192.168.0.113',
+    'http://kozimhon.uz',
+    'https://kozimhonturaev.uz',
+    'http://kozimxon.uz',
+    'https://kozixhonturaev.uz',
 ]
 
 
@@ -137,3 +149,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATIC_URL = 'static/'
+#STATICFILES_DIRS = [
+ #   BASE_DIR / "static",
+#]
+STATIC_ROOT = BASE_DIR / 'static'

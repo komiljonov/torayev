@@ -160,7 +160,7 @@ class Bot(Updater):
     def name(self, update: Update, context: CallbackContext):
         user, db = User.get(update)
         name = update.message.text
-        if len(name.split(" ")) >= 2:
+        if True:
             context.user_data['user'].name = name
             context.user_data['user'].save()
             update.message.reply_text("Iltimos raqamingizni yuboring!", reply_markup=ReplyKeyboardMarkup(
@@ -202,7 +202,8 @@ class Bot(Updater):
 
     def register(self, name, number):
         pipeline: Pipeline = Pipeline.objects.get(object_id=5559010)
-        status: Status = Status.get_for(pipeline).get(object_id=49093348)
+        # 49093345
+        status: Status = Status.get_for(pipeline).get(object_id=49093345)
         new_lead: Lead = Lead(
             data={
                 'name':f"Telegram HR Bot {number} {name} "

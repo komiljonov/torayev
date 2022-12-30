@@ -4,7 +4,7 @@ from django.http.response import JsonResponse
 from amocrm.v2.tokens import default_token_manager as manager
 from amocrm.v2 import Lead, Status, Pipeline, Contact
 
-from bot.models import Video
+from bot.models import Video, DbLead
 # Create your views here.
 
 manager(
@@ -47,8 +47,18 @@ def register(request):
     print(data)
     name, number, work_place = data['name'], data['number'], data['work_place']
 
-    pipeline: Pipeline = Pipeline.objects.get(object_id=5559010)
-    status: Status = Status.get_for(pipeline).get(object_id=49093348)
+
+    exists = DbLead.objects.filter(number=number).exists()
+    if exists:
+        return JsonResponse({'ok': False})
+
+
+
+
+
+    pipeline: Pipeline = Pipeline.objects.get(object_id=5661619)
+    status: Status = Status.get_for(pipeline).get(object_id=49840606)
+
     new_lead: Lead = Lead(
         data={
             'name':f"Web site lead {number} {name}"
@@ -79,6 +89,15 @@ def register(request):
         contact
     )
     new_lead.save()
+
+
+    DbLead.objects.create(
+        name=name,
+        number=number,
+        work_place=work_place,
+    )
+
+
     return JsonResponse({
         "ok": True
     })
